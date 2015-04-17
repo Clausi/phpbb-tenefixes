@@ -1,0 +1,11 @@
+services:
+    clausi.tenefixes.listener:
+        class: clausi\tenefixes\event\main_listener
+        arguments:
+            - @controller.helper
+            - @template
+            - @config
+            - @auth
+            - @request
+        tags:
+            - { name: event.listener }
