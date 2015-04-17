@@ -22,15 +22,21 @@ class main_listener implements EventSubscriberInterface
 	protected $config;
 	protected $auth;
 	protected $request;
+	protected $user;
+	protected $phpbb_root_path;
+	protected $php_ext;
 
 
-	public function __construct(\phpbb\controller\helper $helper, \phpbb\template\template $template, \phpbb\config\config $config, \phpbb\auth\auth $auth, \phpbb\request\request $request)
+	public function __construct(\phpbb\controller\helper $helper, \phpbb\template\template $template, \phpbb\config\config $config, \phpbb\auth\auth $auth, \phpbb\request\request $request, \phpbb\user $user, $phpbb_root_path, $php_ext)
 	{
 		$this->helper = $helper;
 		$this->template = $template;
 		$this->config = $config;
 		$this->auth = $auth;
 		$this->request = $request;
+		$this->user = $user;
+		$this->phpbb_root_path = $phpbb_root_path;
+		$this->php_ext = $php_ext;
 	}
 	
 	
@@ -45,8 +51,6 @@ class main_listener implements EventSubscriberInterface
 	
 	private function change_memberlist_ordering()
 	{
-		global $phpbb_root_path, $phpEx;
-		
 		$default_key = 'c';
 		
 		$sort_key = $this->request->variable('sk', 'l');
@@ -108,7 +112,7 @@ class main_listener implements EventSubscriberInterface
 		}
 		$sort_params[] = "mode=$mode";
 		
-		$sort_url = append_sid("{$phpbb_root_path}memberlist.$phpEx", implode('&amp;', $sort_params));
+		$sort_url = append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", implode('&amp;', $sort_params));
 		$this->template->assign_var('U_SORT_ACTIVE', ($this->auth->acl_get('u_viewonline')) ? $sort_url . '&amp;sk=l&amp;sd=' . (($sort_key == 'l' && $sort_dir == 'a') ? 'd' : 'a') : '');
 	}
 	
