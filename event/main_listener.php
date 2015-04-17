@@ -36,7 +36,10 @@ class main_listener implements EventSubscriberInterface
 	
 	public function tene_page_footer($event)
 	{
-		$this->change_memberlist_ordering();
+		if($this->auth->acl_get('u_viewonline'))
+		{
+			$this->change_memberlist_ordering();
+		}
 	}
 	
 	
