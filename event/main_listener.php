@@ -13,7 +13,7 @@ class main_listener implements EventSubscriberInterface
 	static public function getSubscribedEvents()
 	{
 		return array(
-			'core.page_footer'    => 'tene_page_footer',
+			'core.page_footer' => 'tene_page_footer',
 		);
 	}
 
@@ -38,7 +38,7 @@ class main_listener implements EventSubscriberInterface
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 	}
-	
+
 	
 	public function tene_page_footer($event)
 	{
